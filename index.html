@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Portfolio</title>
+    <style>
+        /* Base Styles & Typography */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--primary-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Header Section */
+        header {
+            text-align: center;
+            padding: 6rem 1rem;
+            background: linear-gradient(135deg, var(--primary-color), #34495e);
+            color: white;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.25rem;
+            color: #ecf0f1;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.8rem 2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+
+        /* Container for Main Content */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 1rem;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .project-card .tags {
+            margin-top: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: #eee;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        /* Skills Section */
+        .skills-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .skill-item {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        /* Footer / Contact */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 3rem 1rem;
+            margin-top: 2rem;
+        }
+
+        footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1>[Your Name]</h1>
+        <p>Software Engineer | Open Source Contributor | Problem Solver</p>
+        <a href="#contact" class="btn">Get In Touch</a>
+    </header>
+
+    <div class="container">
+        <section id="about" style="margin-bottom: 4rem; text-align: center;">
+            <h2>About Me</h2>
+            <p style="max-width: 800px; margin: 0 auto; font-size: 1.1rem;">
+                Hello! I'm a passionate developer focused on building clean, efficient, and scalable software. 
+                When I'm not coding, I'm usually [insert a brief personal hobby to keep it human]. 
+                Welcome to my digital workspace.
+            </p>
+        </section>
+
+        <section id="projects" style="margin-bottom: 4rem;">
+            <h2>Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>Project Name 1</h3>
+                    <p>A brief description of what this project does, the problem it solves, and why it's interesting. Keep it concise and impactful.</p>
+                    <div class="tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Django</span>
+                        <span class="tag">PostgreSQL</span>
+                    </div>
+                    <div style="margin-top: 1rem;">
+                        <a href="#" style="color: var(--secondary-color); text-decoration: none;">View Source &rarr;</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h3>Project Name 2</h3>
+                    <p>Another great project you built. Mention any specific algorithms, APIs, or architectural patterns you utilized here.</p>
+                    <div class="tags">
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">React</span>
+                        <span class="tag">Node.js</span>
+                    </div>
+                    <div style="margin-top: 1rem;">
+                        <a href="#" style="color: var(--secondary-color); text-decoration: none;">View Live &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2>Technical Skills</h2>
+            <div class="skills-container">
+                <span class="skill-item">Python</span>
+                <span class="skill-item">JavaScript / TypeScript</span>
+                <span class="skill-item">HTML / CSS</span>
+                <span class="skill-item">React / Vue</span>
+                <span class="skill-item">Git / GitHub</span>
+                <span class="skill-item">Docker</span>
+                <span class="skill-item">SQL / NoSQL</span>
+            </div>
+        </section>
+    </div>
+
+    <footer id="contact">
+        <h2 style="color: white;">Let's Connect</h2>
+        <p style="margin-bottom: 1.5rem;">I'm currently open to new opportunities and collaborations.</p>
+        <p>
+            <a href="mailto:your.email@example.com">Email Me</a> | 
+            <a href="https://github.com/yourusername" target="_blank">GitHub</a> | 
+            <a href="https://linkedin.com/in/yourusername" target="_blank">LinkedIn</a>
+        </p>
+        <p style="margin-top: 2rem; font-size: 0.9rem; color: #aaa;">
+            &copy; 2026 [Your Name]. Built with plain HTML & CSS.
+        </p>
+    </footer>
+
+</body>
+</html>
