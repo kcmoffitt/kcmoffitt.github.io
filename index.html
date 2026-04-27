@@ -18,6 +18,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            scroll-behavior: smooth;
         }
 
         body {
@@ -57,7 +58,7 @@
             text-decoration: none;
             margin-left: 30px;
             font-weight: bold;
-            position: relative;
+            font-size: 0.9rem;
         }
 
         .nav-links a:hover {
@@ -147,6 +148,7 @@
             color: var(--magenta);
             margin-bottom: 40px;
             text-align: center;
+            text-transform: uppercase;
         }
 
         /* --- Profile Image Styling --- */
@@ -178,12 +180,9 @@
             50% { transform: translateY(-15px) rotate(2deg); }
         }
 
-        .profile-text {
-            flex: 1;
-            min-width: 300px;
-        }
+        .profile-text { flex: 1; min-width: 300px; }
 
-        /* --- Project Cards --- */
+        /* --- Cards (Projects & Hobbies) --- */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -197,6 +196,8 @@
             padding: 30px;
             border-radius: 20px;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .card:hover {
@@ -205,10 +206,18 @@
             transform: translateY(-10px) rotateX(10deg);
         }
 
-        .card h3 {
-            color: var(--yellow);
-            margin-bottom: 15px;
+        .card h3 { color: var(--yellow); margin-bottom: 15px; }
+
+        /* Hobby Specific Flair */
+        .hobby-card {
+            border: 1px dashed var(--magenta);
+            text-align: center;
         }
+        .hobby-card:hover {
+            border-style: solid;
+            box-shadow: 0 0 30px var(--magenta);
+        }
+        .emoji-large { font-size: 3rem; display: block; margin-bottom: 10px; }
 
         /* --- Footer --- */
         footer {
@@ -217,11 +226,7 @@
             border-top: 1px solid var(--magenta);
         }
 
-        .contact-info p {
-            font-size: 1.2rem;
-            margin: 10px 0;
-            color: var(--cyan);
-        }
+        .contact-info p { font-size: 1.2rem; margin: 10px 0; color: var(--cyan); }
 
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
@@ -240,6 +245,7 @@
         <div class="nav-links">
             <a href="#about">ABOUT</a>
             <a href="#projects">RESEARCH</a>
+            <a href="#hobbies">SIDE_QUESTS</a>
             <a href="#contact">HACK_IN</a>
         </div>
     </nav>
@@ -260,7 +266,7 @@
                 <div class="profile-text">
                     <p>Based at <strong>Rutgers Business School</strong>, I specialize in the intersection of <strong>Accounting Information Systems (AIS)</strong> and linguistic forensics.</p>
                     <br>
-                    <p>Equipped with a Ph.D. from the <strong>University of Arizona</strong>, my mission is the automated detection of fraud and the analysis of linguistic credibility. I build high-performance tools that transform raw text into actionable investigative intelligence.</p>
+                    <p>Equipped with a Ph.D. from the <strong>University of Arizona</strong>, my mission is the automated detection of fraud and the analysis of linguistic credibility. I build tools that transform raw text into investigative intelligence.</p>
                 </div>
             </div>
         </section>
@@ -274,11 +280,32 @@
                 </div>
                 <div class="card">
                     <h3>Linguistic Deception Detection</h3>
-                    <p>Cross-medium forensic analysis including CEO interviews and emergency 911 call transcripts.</p>
+                    <p>Forensic analysis across interviews and transcripts to identify verbal cues of deception.</p>
                 </div>
                 <div class="card">
                     <h3>AIS Tool Builder</h3>
-                    <p>Engineering custom-coded linguistic analysis suites for the modern accounting information landscape.</p>
+                    <p>Engineering custom-coded linguistic analysis suites for the modern accounting landscape.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="hobbies" class="reveal">
+            <h2>Side Quests</h2>
+            <div class="grid">
+                <div class="card hobby-card">
+                    <span class="emoji-large">🏀</span>
+                    <h3>Basketball</h3>
+                    <p>Dominating the court with high-speed analytics and team-based strategy.</p>
+                </div>
+                <div class="card hobby-card">
+                    <span class="emoji-large">🏓</span>
+                    <h3>Ping Pong</h3>
+                    <p>Mastering the physics of the spin. Quick reflexes meet precision engineering.</p>
+                </div>
+                <div class="card hobby-card">
+                    <span class="emoji-large">🐍</span>
+                    <h3>Cobra Kai</h3>
+                    <p>Strike First. Strike Hard. No Mercy. Bringing that Dojo energy to data mining.</p>
                 </div>
             </div>
         </section>
