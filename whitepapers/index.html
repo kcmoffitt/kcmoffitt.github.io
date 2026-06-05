@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>White Papers | Auditing Artificial Intelligence</title>
+  <link rel="stylesheet" href="../css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="../index.html"><span class="brand-mark">AAI</span><span>Auditing Artificial Intelligence</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
+      <a href="../guides/index.html">Guides</a>
+      <a href="../papers/index.html">Papers</a>
+      <a href="../frameworks/index.html">Frameworks</a>
+      <a href="index.html">White Papers</a>
+      <a href="../videos/index.html">Videos</a>
+      <a href="../tools/index.html">Tools</a>
+      <a href="../blog/index.html">Blog</a>
+    </nav>
+  </header>
+  <main>
+    <section class="page-hero">
+      <p class="eyebrow">Practical reports</p>
+      <h1>White Papers</h1>
+      <p>Accessible reports, technical profiles, assessment lists, and practitioner guidance that can support audit planning.</p>
+    </section>
+    <section class="directory" data-directory>
+      <div class="directory-controls">
+        <input type="search" data-filter-search placeholder="Search white papers">
+        <input type="search" data-filter-author placeholder="Filter by organization">
+        <input type="search" data-filter-source placeholder="Filter by source">
+        <select data-filter-topic aria-label="Filter by topic">
+          <option value="all">All topics</option>
+          <option value="accountability">Accountability</option>
+          <option value="assessment">Assessment</option>
+          <option value="documentation">Documentation</option>
+          <option value="governance">Governance</option>
+          <option value="risk-management">Risk management</option>
+          <option value="security">Security</option>
+        </select>
+        <select data-sort aria-label="Sort white papers">
+          <option value="year-desc">Newest first</option>
+          <option value="year-asc">Oldest first</option>
+          <option value="title">Title</option>
+          <option value="author">Organization</option>
+          <option value="source">Source</option>
+          <option value="topic">Topic</option>
+        </select>
+      </div>
+      <div class="card-grid" data-render="white-papers" data-src="../data/white-papers.json"></div>
+    </section>
+  </main>
+  <footer class="site-footer"><p>Auditing Artificial Intelligence</p><p>White papers stay useful when their source and purpose are clearly labeled.</p></footer>
+  <script src="../js/data-loader.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>

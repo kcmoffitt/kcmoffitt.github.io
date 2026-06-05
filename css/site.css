@@ -170,8 +170,13 @@ h3 {
 .directory-controls {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 10px;
   max-width: 690px;
+}
+
+.directory-controls input {
+  flex: 1 1 220px;
 }
 
 input,
@@ -390,7 +395,8 @@ button:hover,
 }
 
 .directory-controls select {
-  max-width: 220px;
+  flex: 1 1 180px;
+  max-width: 240px;
 }
 
 .empty-state {

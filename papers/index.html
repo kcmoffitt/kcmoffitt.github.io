@@ -13,6 +13,7 @@
     <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
       <a href="../guides/index.html">Guides</a>
       <a href="index.html">Papers</a>
+      <a href="../frameworks/index.html">Frameworks</a>
       <a href="../videos/index.html">Videos</a>
       <a href="../tools/index.html">Tools</a>
       <a href="../blog/index.html">Blog</a>
@@ -22,24 +23,49 @@
     <section class="page-hero">
       <p class="eyebrow">Research library</p>
       <h1>Papers</h1>
-      <p>Foundational and practical research for AI auditing, assurance, documentation, fairness, security, and governance.</p>
+      <p>Foundational and practical research for AI auditing, assurance, documentation, fairness, security, evaluation, and governance.</p>
     </section>
     <section class="directory" data-directory>
       <div class="directory-controls">
-        <input type="search" data-filter-search placeholder="Search papers">
+        <input type="search" data-filter-search placeholder="Search title, tags, summary, or audit use">
+        <input type="search" data-filter-author placeholder="Filter by author">
+        <input type="search" data-filter-source placeholder="Filter by source or journal">
         <select data-filter-topic aria-label="Filter by topic">
           <option value="all">All topics</option>
+          <option value="accountability">Accountability</option>
+          <option value="adversarial-ml">Adversarial ML</option>
+          <option value="ai-assurance">AI assurance</option>
+          <option value="ai-risk">AI risk</option>
+          <option value="algorithmic-auditing">Algorithmic auditing</option>
+          <option value="audit-methods">Audit methods</option>
+          <option value="audit-study">Audit studies</option>
+          <option value="audit-toolkit">Audit toolkits</option>
+          <option value="continuous-auditing">Continuous auditing</option>
+          <option value="dangerous-capabilities">Dangerous capabilities</option>
           <option value="documentation">Documentation</option>
+          <option value="ethics-based-auditing">Ethics-based auditing</option>
           <option value="evaluation">Evaluation</option>
           <option value="fairness">Fairness</option>
+          <option value="frontier-ai">Frontier AI</option>
           <option value="governance">Governance</option>
+          <option value="interpretability">Interpretability</option>
+          <option value="language-models">Language models</option>
+          <option value="llm-auditing">LLM auditing</option>
+          <option value="model-risk">Model risk</option>
+          <option value="privacy">Privacy</option>
+          <option value="red-teaming">Red teaming</option>
+          <option value="risk-assessment">Risk assessment</option>
+          <option value="risk-taxonomy">Risk taxonomy</option>
           <option value="security">Security</option>
+          <option value="trustworthiness">Trustworthiness</option>
         </select>
-        <select data-filter-level aria-label="Filter by level">
-          <option value="all">All levels</option>
-          <option value="beginner">Beginner</option>
-          <option value="intermediate">Intermediate</option>
-          <option value="advanced">Advanced</option>
+        <select data-sort aria-label="Sort papers">
+          <option value="year-desc">Newest first</option>
+          <option value="year-asc">Oldest first</option>
+          <option value="title">Title</option>
+          <option value="author">Author</option>
+          <option value="source">Source / journal</option>
+          <option value="topic">Topic</option>
         </select>
       </div>
       <div class="card-grid" data-render="papers" data-src="../data/papers.json"></div>
