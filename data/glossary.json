@@ -1,0 +1,14 @@
+[
+  {
+    "term": "Model Card",
+    "definition": "A structured document describing a model's intended use, training data, evaluation, limitations, and ethical considerations."
+  },
+  {
+    "term": "Dataset Lineage",
+    "definition": "The documented origin, transformations, ownership, licensing, and maintenance path for data used in an AI system."
+  },
+  {
+    "term": "Residual Risk",
+    "definition": "The risk that remains after controls and mitigations have been applied."
+  }
+]

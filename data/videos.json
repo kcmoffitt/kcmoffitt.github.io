@@ -1,0 +1,26 @@
+[
+  {
+    "title": "NIST AI Risk Management Framework Overview",
+    "summary": "A starting point for understanding the govern, map, measure, and manage functions.",
+    "href": "https://www.nist.gov/itl/ai-risk-management-framework",
+    "topic": "governance",
+    "level": "beginner",
+    "year": "2023"
+  },
+  {
+    "title": "AI Red Teaming and Evaluation Talks",
+    "summary": "Use this slot for talks on adversarial testing, misuse, robustness, and model evaluation methods.",
+    "href": "https://www.youtube.com/results?search_query=AI+red+teaming+evaluation",
+    "topic": "security",
+    "level": "intermediate",
+    "year": "Library"
+  },
+  {
+    "title": "Fairness in Machine Learning Lectures",
+    "summary": "A curated search entry for fairness, measurement, and responsible ML lecture material.",
+    "href": "https://www.youtube.com/results?search_query=fairness+in+machine+learning+lecture",
+    "topic": "fairness",
+    "level": "beginner",
+    "year": "Library"
+  }
+]

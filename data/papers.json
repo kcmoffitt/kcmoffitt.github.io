@@ -1,0 +1,50 @@
+[
+  {
+    "title": "Model Cards for Model Reporting",
+    "summary": "A foundational paper for documenting intended use, performance, limitations, and ethical considerations.",
+    "href": "https://arxiv.org/abs/1810.03993",
+    "topic": "documentation",
+    "level": "beginner",
+    "year": "2018"
+  },
+  {
+    "title": "Datasheets for Datasets",
+    "summary": "A practical structure for dataset provenance, composition, collection, recommended uses, and maintenance.",
+    "href": "https://arxiv.org/abs/1803.09010",
+    "topic": "documentation",
+    "level": "beginner",
+    "year": "2018"
+  },
+  {
+    "title": "On the Dangers of Stochastic Parrots",
+    "summary": "A widely discussed analysis of risks in large language models, including data, scale, bias, and deployment harms.",
+    "href": "https://dl.acm.org/doi/10.1145/3442188.3445922",
+    "topic": "governance",
+    "level": "intermediate",
+    "year": "2021"
+  },
+  {
+    "title": "Toward Trustworthy AI Development",
+    "summary": "A framing paper for trustworthy AI practices across development, deployment, monitoring, and accountability.",
+    "href": "https://arxiv.org/abs/2004.07213",
+    "topic": "governance",
+    "level": "intermediate",
+    "year": "2020"
+  },
+  {
+    "title": "Concrete Problems in AI Safety",
+    "summary": "A useful taxonomy for robustness, reward hacking, distribution shift, and monitoring concerns.",
+    "href": "https://arxiv.org/abs/1606.06565",
+    "topic": "security",
+    "level": "intermediate",
+    "year": "2016"
+  },
+  {
+    "title": "A Survey of Methods for Explaining Black Box Models",
+    "summary": "A broad survey of interpretability methods that helps auditors choose explanation techniques carefully.",
+    "href": "https://arxiv.org/abs/1802.01933",
+    "topic": "evaluation",
+    "level": "advanced",
+    "year": "2018"
+  }
+]

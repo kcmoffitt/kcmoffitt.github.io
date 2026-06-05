@@ -1,0 +1,20 @@
+[
+  {
+    "title": "AI Audit Foundations",
+    "summary": "Start with audit objectives, evidence, model inventories, and the basic vocabulary of AI assurance.",
+    "href": "guides/beginner.html",
+    "tags": ["Beginner", "Foundations"]
+  },
+  {
+    "title": "Model Risk and Controls",
+    "summary": "Map model use cases to impact, failure modes, owners, controls, and review cadence.",
+    "href": "guides/model-risk.html",
+    "tags": ["Risk", "Controls"]
+  },
+  {
+    "title": "Evaluation and Evidence",
+    "summary": "Plan tests, measure performance, track limitations, and assess whether claims are reproducible.",
+    "href": "guides/evaluation.html",
+    "tags": ["Evals", "Evidence"]
+  }
+]

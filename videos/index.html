@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Videos | Auditing Artificial Intelligence</title>
+  <link rel="stylesheet" href="../css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="../index.html"><span class="brand-mark">AAI</span><span>Auditing Artificial Intelligence</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
+      <a href="../guides/index.html">Guides</a>
+      <a href="../papers/index.html">Papers</a>
+      <a href="index.html">Videos</a>
+      <a href="../tools/index.html">Tools</a>
+      <a href="../blog/index.html">Blog</a>
+    </nav>
+  </header>
+  <main>
+    <section class="page-hero">
+      <p class="eyebrow">Watch list</p>
+      <h1>Videos</h1>
+      <p>Talks, lectures, and briefings for AI audit practice. Add specific videos here as the collection matures.</p>
+    </section>
+    <section class="directory" data-directory>
+      <div class="directory-controls">
+        <input type="search" data-filter-search placeholder="Search videos">
+        <select data-filter-topic aria-label="Filter by topic">
+          <option value="all">All topics</option>
+          <option value="evaluation">Evaluation</option>
+          <option value="fairness">Fairness</option>
+          <option value="governance">Governance</option>
+          <option value="security">Security</option>
+        </select>
+        <select data-filter-level aria-label="Filter by level">
+          <option value="all">All levels</option>
+          <option value="beginner">Beginner</option>
+          <option value="intermediate">Intermediate</option>
+          <option value="advanced">Advanced</option>
+        </select>
+      </div>
+      <div class="card-grid" data-render="videos" data-src="../data/videos.json"></div>
+    </section>
+  </main>
+  <footer class="site-footer"><p>Auditing Artificial Intelligence</p><p>Video resources should earn their spot by improving audit judgment.</p></footer>
+  <script src="../js/data-loader.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tools | Auditing Artificial Intelligence</title>
+  <link rel="stylesheet" href="../css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="../index.html"><span class="brand-mark">AAI</span><span>Auditing Artificial Intelligence</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
+      <a href="../guides/index.html">Guides</a>
+      <a href="../papers/index.html">Papers</a>
+      <a href="../videos/index.html">Videos</a>
+      <a href="index.html">Tools</a>
+      <a href="../blog/index.html">Blog</a>
+    </nav>
+  </header>
+  <main>
+    <section class="page-hero">
+      <p class="eyebrow">Workshop</p>
+      <h1>Tools</h1>
+      <p>Small static miniapps that help structure audit scoping, evidence requests, and control review.</p>
+    </section>
+    <section class="directory" data-directory>
+      <div class="directory-controls">
+        <input type="search" data-filter-search placeholder="Search tools">
+        <select data-filter-topic aria-label="Filter by topic">
+          <option value="all">All topics</option>
+          <option value="fieldwork">Fieldwork</option>
+          <option value="governance">Governance</option>
+          <option value="model-risk">Model risk</option>
+        </select>
+        <select data-filter-level aria-label="Filter by level">
+          <option value="all">All levels</option>
+          <option value="beginner">Beginner</option>
+          <option value="intermediate">Intermediate</option>
+        </select>
+      </div>
+      <div class="card-grid" data-render="tools" data-src="../data/tools.json"></div>
+      <p id="planned" class="empty-state" hidden>Planned tools will land here as separate static miniapps.</p>
+    </section>
+  </main>
+  <footer class="site-footer"><p>Auditing Artificial Intelligence</p><p>Useful tools first, elaborate tools later.</p></footer>
+  <script src="../js/data-loader.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>

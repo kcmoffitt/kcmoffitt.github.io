@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Risk Matrix | Auditing Artificial Intelligence</title>
+  <link rel="stylesheet" href="../../../css/site.css">
+</head>
+<body>
+  <header class="site-header"><a class="brand" href="../../../index.html"><span class="brand-mark">AAI</span><span>Auditing Artificial Intelligence</span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button><nav id="site-nav" class="site-nav"><a href="../../../guides/index.html">Guides</a><a href="../../../papers/index.html">Papers</a><a href="../../../videos/index.html">Videos</a><a href="../../index.html">Tools</a><a href="../../../blog/index.html">Blog</a></nav></header>
+  <main class="section">
+    <div class="miniapp-shell">
+      <div class="section-heading"><p class="eyebrow">Miniapp</p><h1>Risk Matrix</h1></div>
+      <section class="miniapp-panel">
+        <label>AI use case<input id="use-case" type="text" placeholder="Customer support chatbot"></label>
+        <label>Likelihood<select id="likelihood"><option value="1">1 Rare</option><option value="2">2 Unlikely</option><option value="3">3 Possible</option><option value="4">4 Likely</option><option value="5">5 Almost certain</option></select></label>
+        <label>Impact<select id="impact"><option value="1">1 Minimal</option><option value="2">2 Minor</option><option value="3">3 Moderate</option><option value="4">4 Major</option><option value="5">5 Severe</option></select></label>
+        <div><strong id="risk-score">Score: 1</strong><p id="risk-guidance">Low priority. Confirm ownership and baseline monitoring.</p></div>
+      </section>
+      <section class="matrix-grid" id="matrix" aria-label="Risk score matrix"></section>
+    </div>
+  </main>
+  <script src="../../../js/app.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

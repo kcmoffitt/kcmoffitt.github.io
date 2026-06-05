@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Risk Matrix",
+    "summary": "Score likelihood and impact to prioritize AI audit attention.",
+    "href": "miniapps/risk-matrix/index.html",
+    "topic": "model-risk",
+    "level": "beginner",
+    "year": "Miniapp"
+  },
+  {
+    "title": "Audit Checklist",
+    "summary": "Track common evidence requests across governance, data, model, testing, and monitoring.",
+    "href": "miniapps/audit-checklist/index.html",
+    "topic": "fieldwork",
+    "level": "beginner",
+    "year": "Miniapp"
+  },
+  {
+    "title": "Control Evidence Tracker",
+    "summary": "Planned miniapp for mapping controls to evidence, owner, status, and residual risk.",
+    "href": "../tools/index.html#planned",
+    "topic": "governance",
+    "level": "intermediate",
+    "year": "Planned"
+  }
+]
