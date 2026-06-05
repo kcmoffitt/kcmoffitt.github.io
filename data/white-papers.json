@@ -82,5 +82,33 @@
     "auditDomains": ["governance", "impact-assessment", "fairness"],
     "summary": "Self-assessment list translating trustworthy AI requirements into practical questions.",
     "auditUse": "Use as a question bank for qualitative AI governance and ethics reviews."
+  },
+  {
+    "id": "international-ai-safety-report-2025",
+    "title": "International AI Safety Report 2025",
+    "organization": "International AI Safety Report",
+    "year": 2025,
+    "source": "International AI Safety Report",
+    "sourceType": "scientific-report",
+    "url": "https://internationalaisafetyreport.org/publication/international-ai-safety-report-2025",
+    "access": "open",
+    "topics": ["ai-safety", "frontier-ai", "risk-management", "technical-safeguards"],
+    "auditDomains": ["model-risk", "security", "evaluation", "monitoring"],
+    "summary": "International expert synthesis of evidence on advanced AI capabilities, risks, and safety practices.",
+    "auditUse": "Use to ground frontier AI audit programs in current risk evidence, including misuse, bias, hallucination, jailbreaks, and safeguard limitations."
+  },
+  {
+    "id": "international-ai-safety-report-2026",
+    "title": "International AI Safety Report 2026",
+    "organization": "International AI Safety Report",
+    "year": 2026,
+    "source": "International AI Safety Report",
+    "sourceType": "scientific-report",
+    "url": "https://internationalaisafetyreport.org/",
+    "access": "open",
+    "topics": ["ai-safety", "general-purpose-ai", "risk-management", "frontier-ai"],
+    "auditDomains": ["model-risk", "security", "evaluation", "monitoring", "governance"],
+    "summary": "Second international report reviewing scientific research on the capabilities and risks of general-purpose AI systems.",
+    "auditUse": "Use as a current evidence base for advanced-AI assurance, risk taxonomies, safety evaluations, and monitoring priorities."
   }
 ]

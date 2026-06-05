@@ -419,7 +419,7 @@ button:hover,
 
 .library-controls {
   display: grid;
-  grid-template-columns: minmax(260px, 2fr) repeat(4, minmax(160px, 1fr));
+  grid-template-columns: minmax(260px, 2fr) repeat(6, minmax(150px, 1fr));
   gap: 12px;
   margin-bottom: 18px;
 }
@@ -441,7 +441,7 @@ button:hover,
 
 .library-table {
   width: 100%;
-  min-width: 1060px;
+  min-width: 1220px;
   border-collapse: collapse;
 }
 

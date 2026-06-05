@@ -7,6 +7,8 @@ const controls = {
   search: document.querySelector("#library-search"),
   type: document.querySelector("#library-type"),
   topic: document.querySelector("#library-topic"),
+  jurisdiction: document.querySelector("#library-jurisdiction"),
+  binding: document.querySelector("#library-binding"),
   access: document.querySelector("#library-access"),
   sort: document.querySelector("#library-sort"),
   clear: document.querySelector("#clear-library-filters"),
@@ -17,6 +19,7 @@ const controls = {
 const sourceFiles = [
   { href: "../data/papers.json", group: "academic-paper", label: "Academic paper" },
   { href: "../data/frameworks.json", group: "framework", label: "Framework / standard" },
+  { href: "../data/regulations.json", group: "regulation", label: "Regulation / law" },
   { href: "../data/white-papers.json", group: "white-paper", label: "White paper / report" }
 ];
 
@@ -28,6 +31,7 @@ async function loadLibrary() {
       return items.map((item) => normalizeResource(item, source));
     }));
     libraryState.resources = collections.flat();
+    populateJurisdictionFilter();
     bindLibraryControls();
     const params = new URLSearchParams(location.search);
     const initialQuery = params.get("q");
@@ -40,18 +44,27 @@ async function loadLibrary() {
 }
 
 function normalizeResource(item, source) {
-  const authors = item.authors || (item.organization ? [item.organization] : []);
+  const authors = item.authors || (item.organization ? [item.organization] : item.authority ? [item.authority] : []);
   const topics = item.topics || [item.topic].filter(Boolean);
   const auditDomains = item.auditDomains || [];
-  const sourceName = item.source || item.publisher || item.organization || "";
+  const sourceName = item.source || item.publisher || item.organization || item.authority || "";
   const url = item.url || item.href || item.openAccessUrl || "";
   const access = item.access || "unknown";
   const sourceType = item.sourceType || source.group;
+  const jurisdiction = item.jurisdiction || "";
+  const status = item.status || "";
+  const bindingLevel = item.bindingLevel || "";
+  const effectiveDate = item.effectiveDate || "";
   const searchText = [
     item.title,
     item.year,
     source.label,
     sourceType,
+    jurisdiction,
+    item.authority,
+    status,
+    bindingLevel,
+    effectiveDate,
     authors.join(" "),
     sourceName,
     item.publisher,
@@ -75,9 +88,13 @@ function normalizeResource(item, source) {
     authors,
     peopleLabel: summarizePeople(authors),
     source: sourceName,
+    jurisdiction,
+    status,
+    bindingLevel,
+    effectiveDate,
     topics,
     auditDomains,
-    broadTopics: getBroadTopics([...topics, ...auditDomains, sourceType]),
+    broadTopics: getBroadTopics([...topics, ...auditDomains, sourceType, bindingLevel, status]),
     access,
     url,
     openAccessUrl: item.openAccessUrl || "",
@@ -87,6 +104,20 @@ function normalizeResource(item, source) {
     citation: item.citation || "",
     searchText
   };
+}
+
+function populateJurisdictionFilter() {
+  if (!controls.jurisdiction) return;
+  const jurisdictions = Array.from(new Set(
+    libraryState.resources
+      .map((resource) => resource.jurisdiction)
+      .filter(Boolean)
+  )).sort((a, b) => a.localeCompare(b));
+
+  controls.jurisdiction.innerHTML = [
+    `<option value="all">All jurisdictions</option>`,
+    ...jurisdictions.map((jurisdiction) => `<option value="${escapeAttribute(jurisdiction)}">${escapeHtml(jurisdiction)}</option>`)
+  ].join("");
 }
 
 function summarizePeople(values) {
@@ -115,7 +146,7 @@ function getBroadTopics(values) {
 }
 
 function bindLibraryControls() {
-  [controls.search, controls.type, controls.topic, controls.access, controls.sort].forEach((control) => {
+  [controls.search, controls.type, controls.topic, controls.jurisdiction, controls.binding, controls.access, controls.sort].forEach((control) => {
     control.addEventListener("input", applyLibraryFilters);
     control.addEventListener("change", applyLibraryFilters);
   });
@@ -123,6 +154,8 @@ function bindLibraryControls() {
     controls.search.value = "";
     controls.type.value = "all";
     controls.topic.value = "all";
+    controls.jurisdiction.value = "all";
+    controls.binding.value = "all";
     controls.access.value = "all";
     controls.sort.value = "year-desc";
     applyLibraryFilters();
@@ -134,14 +167,18 @@ function applyLibraryFilters() {
   const terms = controls.search.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
   const type = controls.type.value;
   const topic = controls.topic.value;
+  const jurisdiction = controls.jurisdiction.value;
+  const binding = controls.binding.value;
   const access = controls.access.value;
 
   libraryState.filtered = libraryState.resources.filter((resource) => {
     const matchesSearch = terms.every((term) => resource.searchText.includes(term));
     const matchesType = type === "all" || resource.group === type;
     const matchesTopic = topic === "all" || resource.broadTopics.includes(topic);
+    const matchesJurisdiction = jurisdiction === "all" || resource.jurisdiction === jurisdiction;
+    const matchesBinding = binding === "all" || resource.bindingLevel === binding;
     const matchesAccess = access === "all" || resource.access === access;
-    return matchesSearch && matchesType && matchesTopic && matchesAccess;
+    return matchesSearch && matchesType && matchesTopic && matchesJurisdiction && matchesBinding && matchesAccess;
   });
 
   sortResources();
@@ -153,6 +190,7 @@ function sortResources() {
   libraryState.filtered.sort((a, b) => {
     if (sort === "year-desc") return b.year - a.year || a.title.localeCompare(b.title);
     if (sort === "year-asc") return a.year - b.year || a.title.localeCompare(b.title);
+    if (sort === "jurisdiction") return a.jurisdiction.localeCompare(b.jurisdiction) || a.title.localeCompare(b.title);
     if (sort === "source") return a.source.localeCompare(b.source) || a.title.localeCompare(b.title);
     return a.title.localeCompare(b.title);
   });
@@ -164,7 +202,7 @@ function renderLibrary() {
   controls.count.textContent = `Showing ${shown} of ${total} resources`;
 
   if (!shown) {
-    controls.results.innerHTML = `<tr><td colspan="8">No resources match the current filters.</td></tr>`;
+    controls.results.innerHTML = `<tr><td colspan="9">No resources match the current filters.</td></tr>`;
     return;
   }
 
@@ -177,6 +215,7 @@ function renderLibrary() {
       </td>
       <td>${escapeHtml(resource.yearLabel)}</td>
       <td>${escapeHtml(resource.typeLabel)}</td>
+      <td>${escapeHtml(resource.jurisdiction || "-")}</td>
       <td>${escapeHtml(resource.peopleLabel)}</td>
       <td>${escapeHtml(resource.source)}</td>
       <td>${renderTopicPreview(resource.topics)}</td>
@@ -184,8 +223,9 @@ function renderLibrary() {
       <td>${resource.url ? `<a class="text-link" href="${escapeAttribute(resource.url)}" target="_blank" rel="noopener">Open</a>` : ""}</td>
     </tr>
     <tr class="detail-row" id="${escapeAttribute(resource.id)}-details" hidden>
-      <td colspan="8">
+      <td colspan="9">
         <div class="detail-content">
+          ${renderRegulatoryDetails(resource)}
           ${resource.summary ? `<p><strong>Summary:</strong> ${escapeHtml(resource.summary)}</p>` : ""}
           ${resource.auditUse ? `<p><strong>Audit use:</strong> ${escapeHtml(resource.auditUse)}</p>` : ""}
           ${resource.doi ? `<p><strong>DOI:</strong> ${escapeHtml(resource.doi)}</p>` : ""}
@@ -211,6 +251,18 @@ function renderTopicPreview(values) {
   const preview = values.slice(0, 3);
   const extra = values.length - preview.length;
   return `${tags(preview)}${extra > 0 ? `<span class="tag">+${extra}</span>` : ""}`;
+}
+
+function renderRegulatoryDetails(resource) {
+  const details = [
+    resource.jurisdiction ? `Jurisdiction: ${resource.jurisdiction}` : "",
+    resource.status ? `Status: ${resource.status}` : "",
+    resource.bindingLevel ? `Binding level: ${resource.bindingLevel}` : "",
+    resource.effectiveDate ? `Effective date: ${resource.effectiveDate}` : ""
+  ].filter(Boolean);
+
+  if (!details.length) return "";
+  return `<p><strong>Governance details:</strong> ${escapeHtml(details.join(" | "))}</p>`;
 }
 
 function tags(values = []) {

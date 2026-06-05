@@ -7,7 +7,7 @@ Static GitHub Pages hub for learning and practicing AI audit work.
 - `index.html` - homepage and hub entry point
 - `css/site.css` - shared visual system
 - `js/` - shared navigation, filtering, and data rendering
-- `data/` - resource collections for papers, videos, tools, glossary, and learning paths
+- `data/` - resource collections for papers, frameworks, regulations, white papers, videos, tools, glossary, and learning paths
 - `guides/` - learning guides by audit domain
 - `library/` - unified searchable table for academic papers, frameworks, standards, regulations, white papers, and reports
 - `papers/` - secondary paper-only view
