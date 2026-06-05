@@ -9,9 +9,10 @@ Static GitHub Pages hub for learning and practicing AI audit work.
 - `js/` - shared navigation, filtering, and data rendering
 - `data/` - resource collections for papers, videos, tools, glossary, and learning paths
 - `guides/` - learning guides by audit domain
-- `papers/` - searchable paper library
-- `frameworks/` - governance frameworks, standards, regulations, and security taxonomies
-- `whitepapers/` - practical reports, technical profiles, and assessment lists
+- `library/` - unified searchable table for academic papers, frameworks, standards, regulations, white papers, and reports
+- `papers/` - secondary paper-only view
+- `frameworks/` - secondary governance frameworks, standards, regulations, and security taxonomies view
+- `whitepapers/` - secondary practical reports, technical profiles, and assessment lists view
 - `videos/` - searchable video library
 - `tools/` - miniapp index and standalone static tools
 - `blog/` - blog index and posts

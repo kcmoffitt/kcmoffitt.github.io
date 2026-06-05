@@ -8,10 +8,13 @@ if (navToggle && siteNav) {
   });
 }
 
-const currentPath = location.pathname.split("/").pop() || "index.html";
+const section = location.pathname.split("/").filter(Boolean)[0] || "";
+const activeSection = ["papers", "frameworks", "whitepapers"].includes(section) ? "library" : section;
 document.querySelectorAll(".site-nav a").forEach((link) => {
   const href = link.getAttribute("href") || "";
-  if (href.endsWith(currentPath) || location.pathname.includes(`/${href.split("/")[0]}/`)) {
+  const linkUrl = new URL(href, location.href);
+  const linkSection = linkUrl.pathname.split("/").filter(Boolean)[0] || "";
+  if (activeSection === linkSection) {
     link.setAttribute("aria-current", "page");
   }
 });
@@ -22,7 +25,7 @@ document.querySelectorAll(".global-search").forEach((form) => {
     const input = form.querySelector("input[type='search']");
     const query = encodeURIComponent(input.value.trim());
     if (query) {
-      location.href = `papers/index.html?q=${query}`;
+      location.href = `library/index.html?q=${query}`;
     }
   });
 });

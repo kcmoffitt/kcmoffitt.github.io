@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library | Auditing Artificial Intelligence</title>
+  <link rel="stylesheet" href="../css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="../index.html"><span class="brand-mark">AAI</span><span>Auditing Artificial Intelligence</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
+      <a href="../guides/index.html">Guides</a>
+      <a href="index.html">Library</a>
+      <a href="../tools/index.html">Tools</a>
+      <a href="../blog/index.html">Blog</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <p class="eyebrow">Research center</p>
+      <h1>Library</h1>
+      <p>Search across academic papers, governance frameworks, standards, regulations, white papers, and reports from one compact table.</p>
+    </section>
+
+    <section class="library" aria-labelledby="library-heading">
+      <div class="library-toolbar">
+        <div>
+          <h2 id="library-heading">Inspect the Collection</h2>
+          <p id="library-count" class="library-count">Loading resources...</p>
+        </div>
+        <button type="button" id="clear-library-filters">Clear filters</button>
+      </div>
+
+      <div class="library-controls">
+        <label>
+          <span>Search</span>
+          <input id="library-search" type="search" placeholder="Search titles, authors, source, DOI, summary...">
+        </label>
+        <label>
+          <span>Type</span>
+          <select id="library-type">
+            <option value="all">All resource types</option>
+            <option value="academic-paper">Academic papers</option>
+            <option value="framework">Frameworks / standards</option>
+            <option value="white-paper">White papers / reports</option>
+          </select>
+        </label>
+        <label>
+          <span>Topic</span>
+          <select id="library-topic">
+            <option value="all">All topics</option>
+            <option value="ai-assurance">AI assurance</option>
+            <option value="ai-risk">AI risk</option>
+            <option value="ai-auditing">AI auditing</option>
+            <option value="governance">Governance</option>
+            <option value="evaluation">Evaluation</option>
+            <option value="fairness">Fairness</option>
+            <option value="security">Security</option>
+            <option value="documentation">Documentation</option>
+            <option value="llm-frontier">LLMs / frontier AI</option>
+          </select>
+        </label>
+        <label>
+          <span>Access</span>
+          <select id="library-access">
+            <option value="all">Any access</option>
+            <option value="open">Open</option>
+            <option value="mixed">Mixed</option>
+            <option value="paywalled">Paywalled</option>
+            <option value="unknown">Unknown</option>
+          </select>
+        </label>
+        <label>
+          <span>Sort</span>
+          <select id="library-sort">
+            <option value="year-desc">Newest first</option>
+            <option value="year-asc">Oldest first</option>
+            <option value="title">Title</option>
+            <option value="source">Source</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="library-table-wrap">
+        <table class="library-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Year</th>
+              <th>Type</th>
+              <th>Author / org</th>
+              <th>Source</th>
+              <th>Topics</th>
+              <th>Access</th>
+              <th>Link</th>
+            </tr>
+          </thead>
+          <tbody id="library-results"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Auditing Artificial Intelligence</p>
+    <p>One library, several kinds of evidence.</p>
+  </footer>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/library.js"></script>
+</body>
+</html>
