@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Model Card Studio | Auditing Artificial Intelligence</title>
+  <link rel="stylesheet" href="../../../css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="../../../index.html"><span class="brand-mark">AAI</span><span>Auditing Artificial Intelligence</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
+      <a href="../../../guides/index.html">Guides</a>
+      <a href="../../../library/index.html">Library</a>
+      <a href="../../index.html">Tools</a>
+      <a href="../../../blog/index.html">Blog</a>
+    </nav>
+  </header>
+
+  <main class="section">
+    <div class="miniapp-shell model-card-studio">
+      <div class="section-heading">
+        <p class="eyebrow">Miniapp</p>
+        <h1>Model Card Studio</h1>
+        <p class="lede">Inspect, edit, and review an audit-ready model card using a seven-stage AI lifecycle structure.</p>
+      </div>
+
+      <section class="miniapp-panel studio-overview" aria-labelledby="studio-title">
+        <div>
+          <h2 id="studio-title">AI Loan Approval Model Card</h2>
+          <p id="studio-purpose"></p>
+        </div>
+        <div class="studio-score">
+          <span id="score-label">Auditability score</span>
+          <strong id="score-value">0%</strong>
+          <div class="progress-bar" aria-label="Auditability score"><span id="score-bar"></span></div>
+        </div>
+      </section>
+
+      <section class="studio-layout" aria-label="Model card workspace">
+        <aside class="stage-nav" aria-label="Model card stages">
+          <div id="stage-buttons"></div>
+        </aside>
+
+        <div class="studio-workspace">
+          <section class="miniapp-panel stage-panel" aria-labelledby="stage-title">
+            <div class="stage-heading">
+              <div>
+                <p id="stage-kicker" class="eyebrow"></p>
+                <h2 id="stage-title"></h2>
+                <p id="stage-summary"></p>
+              </div>
+              <div class="stage-actions">
+                <button type="button" id="reset-stage">Reset stage</button>
+                <button type="button" id="export-markdown">Export Markdown</button>
+                <button type="button" id="export-json">Export JSON</button>
+              </div>
+            </div>
+            <div id="stage-fields" class="stage-fields"></div>
+          </section>
+
+          <section class="miniapp-panel review-panel" aria-labelledby="review-heading">
+            <div class="stage-heading">
+              <div>
+                <p class="eyebrow">Reviewer mode</p>
+                <h2 id="review-heading">Evidence Quality Review</h2>
+              </div>
+              <button type="button" id="clear-review">Clear review</button>
+            </div>
+            <div id="review-controls" class="review-controls"></div>
+            <div class="gap-summary">
+              <h3>Gap Summary</h3>
+              <ul id="gap-list"></ul>
+            </div>
+          </section>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>Auditing Artificial Intelligence</p>
+    <p>Document the claim, then inspect the evidence.</p>
+  </footer>
+
+  <script src="../../../js/app.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

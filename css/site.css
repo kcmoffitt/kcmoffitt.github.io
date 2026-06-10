@@ -708,6 +708,167 @@ button:hover,
   background: var(--green);
 }
 
+.model-card-studio {
+  max-width: 1280px;
+}
+
+.studio-overview {
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
+  align-items: center;
+}
+
+.studio-overview h2 {
+  font-size: clamp(1.35rem, 2vw, 2rem);
+}
+
+.studio-overview p {
+  margin: 8px 0 0;
+  color: var(--muted);
+}
+
+.studio-score {
+  display: grid;
+  gap: 8px;
+}
+
+.studio-score span {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.studio-score strong {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.studio-layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+  gap: 18px;
+}
+
+.stage-nav {
+  align-self: start;
+  position: sticky;
+  top: 96px;
+}
+
+.stage-nav > div,
+.studio-workspace,
+.stage-fields,
+.review-controls,
+.gap-summary ul {
+  display: grid;
+  gap: 10px;
+}
+
+.stage-button {
+  display: grid;
+  height: auto;
+  min-height: 0;
+  justify-items: start;
+  gap: 4px;
+  padding: 12px;
+  text-align: left;
+}
+
+.stage-button[aria-current="page"] {
+  border-color: var(--green);
+  background: rgba(31, 111, 91, 0.1);
+  color: var(--green-dark);
+}
+
+.stage-button span {
+  font-weight: 850;
+}
+
+.stage-button small {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.stage-heading {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.stage-heading p {
+  margin: 8px 0 0;
+  color: var(--muted);
+}
+
+.stage-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: end;
+  gap: 8px;
+}
+
+.guidance-panel,
+.model-card-field {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+}
+
+.guidance-panel {
+  padding: 14px 16px;
+  border-left: 4px solid var(--blue);
+}
+
+.guidance-panel p {
+  margin: 4px 0 0;
+  color: var(--muted);
+}
+
+.model-card-field {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+}
+
+.model-card-field label,
+.review-controls label {
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.model-card-field textarea {
+  min-height: 120px;
+  color: var(--ink);
+  font-size: 0.96rem;
+  line-height: 1.55;
+}
+
+.review-controls {
+  grid-template-columns: repeat(4, minmax(140px, 1fr));
+}
+
+.gap-summary {
+  display: grid;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.gap-summary ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gap-summary li {
+  max-width: none;
+  padding: 10px 12px;
+  border-left: 4px solid var(--amber);
+  background: rgba(181, 116, 47, 0.1);
+}
+
 @media (max-width: 900px) {
   .site-header {
     align-items: flex-start;
@@ -736,7 +897,9 @@ button:hover,
 
   .hero,
   .split,
-  .guide-layout {
+  .guide-layout,
+  .studio-layout,
+  .studio-overview {
     grid-template-columns: 1fr;
   }
 
@@ -770,5 +933,21 @@ button:hover,
 
   .guide-nav {
     position: static;
+  }
+
+  .stage-nav {
+    position: static;
+  }
+
+  .stage-heading {
+    display: grid;
+  }
+
+  .stage-actions {
+    justify-content: start;
+  }
+
+  .review-controls {
+    grid-template-columns: 1fr;
   }
 }

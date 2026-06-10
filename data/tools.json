@@ -16,6 +16,14 @@
     "year": "Miniapp"
   },
   {
+    "title": "Model Card Studio",
+    "summary": "Inspect, edit, review, and export a seven-stage audit-ready model card.",
+    "href": "miniapps/model-card-studio/index.html",
+    "topic": "governance",
+    "level": "beginner",
+    "year": "Miniapp"
+  },
+  {
     "title": "Control Evidence Tracker",
     "summary": "Planned miniapp for mapping controls to evidence, owner, status, and residual risk.",
     "href": "../tools/index.html#planned",
