@@ -1,6 +1,7 @@
 const libraryState = {
   resources: [],
-  filtered: []
+  filtered: [],
+  unavailableCollections: []
 };
 
 const controls = {
@@ -22,22 +23,58 @@ const sourceFiles = [
 ];
 
 async function loadLibrary() {
-  try {
-    const collections = await Promise.all(sourceFiles.map(async (source) => {
-      const response = await fetch(source.href);
-      const items = await response.json();
-      return items.map((item) => normalizeResource(item, source));
-    }));
-    libraryState.resources = collections.flat();
-    bindLibraryControls();
-    const params = new URLSearchParams(location.search);
-    const initialQuery = params.get("q");
-    if (initialQuery) controls.search.value = initialQuery;
-    applyLibraryFilters();
-  } catch (error) {
-    controls.results.innerHTML = `<tr><td colspan="8">The library could not be loaded.</td></tr>`;
+  const collections = await Promise.all(sourceFiles.map(loadSourceCollection));
+  libraryState.resources = collections.flatMap((collection) => collection.resources);
+  libraryState.unavailableCollections = collections
+    .filter((collection) => collection.error)
+    .map((collection) => collection.source.label);
+
+  bindLibraryControls();
+  const params = new URLSearchParams(location.search);
+  const initialQuery = params.get("q");
+  if (initialQuery) controls.search.value = initialQuery;
+
+  if (!libraryState.resources.length) {
+    controls.results.innerHTML = `<tr><td colspan="8">${escapeHtml(getUnavailableMessage())}</td></tr>`;
     controls.count.textContent = "Library unavailable";
+    return;
   }
+
+  applyLibraryFilters();
+}
+
+async function loadSourceCollection(source) {
+  try {
+    const response = await fetch(source.href, { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error(`${source.href} returned ${response.status}`);
+    }
+
+    const items = await response.json();
+    if (!Array.isArray(items)) {
+      throw new Error(`${source.href} did not contain a JSON array`);
+    }
+
+    return {
+      source,
+      resources: items.map((item) => normalizeResource(item, source))
+    };
+  } catch (error) {
+    console.warn(`Could not load ${source.label}`, error);
+    return {
+      source,
+      resources: [],
+      error
+    };
+  }
+}
+
+function getUnavailableMessage() {
+  if (location.protocol === "file:") {
+    return "The library data could not be loaded because browsers block JSON requests from local files. Open the site through GitHub Pages or a local web server.";
+  }
+
+  return "The library data could not be loaded. Check that the data files are published with the site.";
 }
 
 function normalizeResource(item, source) {
@@ -175,7 +212,10 @@ function sortResources() {
 function renderLibrary() {
   const total = libraryState.resources.length;
   const shown = libraryState.filtered.length;
-  controls.count.textContent = `Showing ${shown} of ${total} resources`;
+  const unavailableNote = libraryState.unavailableCollections.length
+    ? `; unavailable: ${libraryState.unavailableCollections.join(", ")}`
+    : "";
+  controls.count.textContent = `Showing ${shown} of ${total} resources${unavailableNote}`;
 
   if (!shown) {
     controls.results.innerHTML = `<tr><td colspan="8">No resources match the current filters.</td></tr>`;
