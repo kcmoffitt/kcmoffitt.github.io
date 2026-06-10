@@ -1,455 +1,458 @@
-const initialModelCard = {
-  title: "AI Loan Approval Model Card",
-  subtitle: "Seven-stage lifecycle revision for audit, governance, and oversight",
-  purpose: "This model card summarizes the most important information about an AI-enabled loan approval model in a consistent lifecycle format. It is designed to help audit, risk, compliance, and governance stakeholders understand model purpose, development evidence, testing results, deployment controls, monitoring procedures, accountability structure, and discontinuation planning.",
-  stages: [
-    {
-      id: "design",
-      title: "Design and Objectives",
-      summary: "Purpose, strategic alignment, intended use, model type, and ethical design considerations.",
-      guidance: "A strong design section makes the approved use precise enough that auditors can test whether the model is being used as intended.",
-      fields: [
-        {
-          label: "Purpose and Strategic Alignment",
-          description: "Supports consistent consumer personal-loan underwriting by estimating default risk and routing applications to approve, decline, or manual review workflows.",
-          outcomes: "Approved business case links model purpose to credit-risk objectives and fair-lending policy. Usage logs show the model is applied only to approved personal-loan products."
-        },
-        {
-          label: "Intended Use and Misuse Guidance",
-          description: "Intended to assist trained underwriters and automated credit-decision workflows for consumer personal loans. It is not approved for mortgage underwriting, small-business lending, collections, marketing, employment, or insurance decisions.",
-          outcomes: "Policy states allowed and prohibited uses. Production samples show no use outside approved product codes. Exceptions and overrides route to manual review with underwriter notes."
-        },
-        {
-          label: "Model Type and Architecture",
-          description: "Supervised credit-risk classification model using gradient-boosted decision trees. The model produces a calibrated probability of default and standardized reason codes.",
-          outcomes: "Model inventory identifies architecture, version, owner, inputs, outputs, and decision thresholds. Validator confirms the artifact matches the documented algorithm and feature list."
-        },
-        {
-          label: "Ethical Considerations at Design",
-          description: "Design excludes protected attributes and prohibits features likely to operate as direct proxies without documented justification. Requirements include explainability, adverse-action support, human review, fair-lending testing, privacy safeguards, and auditability.",
-          outcomes: "Feature review confirms protected attributes are not used as inputs. Compliance sign-off documents fair-lending design review before deployment."
-        }
-      ]
-    },
-    {
-      id: "development",
-      title: "Development and Training",
-      summary: "Algorithm details, training data, label quality, and bias mitigations used during development.",
-      guidance: "A strong development section lets an auditor trace data, labels, code, and model artifacts back to controlled sources.",
-      fields: [
-        {
-          label: "Algorithm Specifics",
-          description: "Gradient-boosted tree model trained with regularization, maximum-depth limits, learning-rate tuning, and monotonic constraints for selected credit-risk variables where appropriate.",
-          outcomes: "Training logs contain hyperparameters, feature transformations, training date, software environment, and random seed. Re-execution reproduces metrics within tolerance."
-        },
-        {
-          label: "Data Used to Train the Model",
-          description: "Five years of internal personal-loan applications, repayment performance, application attributes, credit-bureau variables, and selected macroeconomic indicators.",
-          outcomes: "Data lineage documentation identifies source systems, date ranges, refresh date, exclusions, and preprocessing steps. Data-quality reports document missingness and remediation."
-        },
-        {
-          label: "Labeling Sources and Quality",
-          description: "Primary label is observed loan performance, such as default within 12 months or serious delinquency within the performance window.",
-          outcomes: "Label-generation script and reconciliation report are available. A sample of labels can be traced from model dataset back to servicing records."
-        },
-        {
-          label: "Fairness and Bias Mitigations",
-          description: "Mitigations include protected-attribute exclusion, proxy review, subgroup performance testing, threshold sensitivity analysis, and manual review for low-confidence or thin-file cases.",
-          outcomes: "Fair-lending memo documents tested groups, proxy analysis, subgroup results, and selected mitigations. Disparate-impact ratios meet internal review thresholds or include documented remediation."
-        }
-      ]
-    },
-    {
-      id: "evaluation",
-      title: "Evaluation and Testing",
-      summary: "Known limitations, technical and ethical performance, and test data used to validate the model.",
-      guidance: "A strong evaluation section ties claims to test design, test data, acceptance criteria, and interpretable results.",
-      fields: [
-        {
-          label: "Known Limitations and Biases",
-          description: "The model is less reliable for applicants with limited credit history, unusual income patterns, recent identity changes, or data outside the bank's historical footprint.",
-          outcomes: "Limitations are listed in validation report and user guidance. Thin-file cases are flagged for manual review. Subgroup sample-size limits are documented."
-        },
-        {
-          label: "Technical Performance",
-          description: "Performance is evaluated using AUC, KS statistic, calibration, precision/recall, false-positive and false-negative rates, and threshold-specific accuracy.",
-          outcomes: "Holdout AUC = 0.84; KS = 0.43; Brier score = 0.079; calibration slope = 0.98. Out-of-time AUC remains within 0.03 of holdout result."
-        },
-        {
-          label: "Ethical Performance",
-          description: "The model is evaluated for fairness of outcomes and explanation quality. Reason codes should accurately reflect variables that materially contributed to the recommendation.",
-          outcomes: "Disparate-impact ratios by protected-group proxy are at or above 0.90. Equal-opportunity difference remains within 5 percentage points. Reason-code audit matches local explanation results in at least 95% of sampled declined cases."
-        },
-        {
-          label: "Data Used to Test the Model",
-          description: "Testing uses a holdout sample, an out-of-time sample from the most recent quarter before deployment, and a production shadow-test sample.",
-          outcomes: "Evaluator confirms no overlap between training and holdout sets. Fairness test data contains sufficient subgroup counts or documents limitations."
-        }
-      ]
-    },
-    {
-      id: "deployment",
-      title: "Deployment",
-      summary: "Real-world inputs, operational context, API/interface constraints, and user instructions.",
-      guidance: "A strong deployment section makes the production decision path traceable from input to score to final action.",
-      fields: [
-        {
-          label: "Real-World Input Characteristics",
-          description: "Production inputs include application data, income, employment status, debt obligations, credit-bureau attributes, requested loan amount, loan purpose, and selected derived ratios.",
-          outcomes: "Production data profile matches documented schema. Input validation logs show rejected or corrected records. Data-quality dashboards report missingness and source-system errors."
-        },
-        {
-          label: "Operational Context",
-          description: "The model is embedded in the loan-origination platform as an underwriting decision-support tool.",
-          outcomes: "Change-management ticket documents deployment approval, user acceptance testing, and go-live date. Decision samples can be traced from intake to model score and final decision."
-        },
-        {
-          label: "Interface and API Constraints",
-          description: "The model runs through a secure API with authenticated calls, versioned endpoints, input-schema validation, response logging, latency requirements, and fallback routing.",
-          outcomes: "API logs identify model version, timestamp, input validation result, score, reason codes, and response status. Access-control testing confirms only approved systems can call the endpoint."
-        },
-        {
-          label: "User Instructions",
-          description: "Underwriters receive instructions on score interpretation, manual review triggers, override documentation, and adverse-action reason communication.",
-          outcomes: "Training records show active users completed model-use training before access. Override tests show required justification fields are complete."
-        }
-      ]
-    },
-    {
-      id: "monitoring",
-      title: "Model Monitoring and Maintenance",
-      summary: "Controls for intended use, drift detection, operational responsibility, misuse prevention, and transparency.",
-      guidance: "A strong monitoring section defines thresholds, owners, review cadence, and escalation evidence.",
-      fields: [
-        {
-          label: "Ensuring Intended Use",
-          description: "Ongoing controls compare production use against approved product scope, user roles, decision thresholds, and override policies.",
-          outcomes: "Monthly use report shows zero unapproved product codes or unauthorized user groups. Out-of-scope calls trigger incident tickets."
-        },
-        {
-          label: "Drift Detection",
-          description: "Monitoring compares production input distributions, score distributions, approval rates, and early performance indicators to training and validation baselines.",
-          outcomes: "Weekly PSI reports are generated for critical features and model score. PSI >= 0.10 triggers review; PSI >= 0.20 triggers formal investigation."
-        },
-        {
-          label: "Operational Responsibility",
-          description: "Credit Risk Analytics owns performance; Model Risk Management owns validation; Compliance owns fair-lending oversight; IT owns availability, access control, logging, and incident response.",
-          outcomes: "RACI matrix lists named owners and backups. Monitoring reports are reviewed on schedule and meeting minutes show issue ownership and closure evidence."
-        },
-        {
-          label: "Preventing Misuse and Supporting Transparency",
-          description: "Misuse prevention includes role-based access, prohibited-use policy, API restrictions, threshold-change approvals, override monitoring, and retained reason codes.",
-          outcomes: "Access reviews confirm least privilege. Product-scope testing blocks unapproved scoring. Declined-application samples reproduce score, reason codes, model version, and decision path."
-        }
-      ]
-    },
-    {
-      id: "governance",
-      title: "Governance and Accountability",
-      summary: "Version history, responsible teams, legal constraints, and documentation availability.",
-      guidance: "A strong governance section names accountable owners and proves approvals, constraints, and records are current.",
-      fields: [
-        {
-          label: "Version and Update History",
-          description: "The model registry records model versions, training dates, data windows, validation dates, approval dates, deployment dates, thresholds, and changes.",
-          outcomes: "Current registry entry includes training, validation, approval, and deployment dates. Any threshold update includes a change ticket, validation report, approval memo, and checksum."
-        },
-        {
-          label: "Responsible Teams or Contacts",
-          description: "Named contacts include business owner, model owner, model validator, compliance owner, IT system owner, and executive sponsor.",
-          outcomes: "Model inventory contains current named contacts and escalation paths. Annual ownership certification confirms owners are active and assigned."
-        },
-        {
-          label: "Legal and Regulatory Constraints",
-          description: "The model is governed by fair-lending, adverse-action, credit-reporting, privacy, model-risk, records-retention, and consumer-protection requirements.",
-          outcomes: "Compliance review documents legal constraints and required controls. Adverse-action sample testing confirms specific, accurate, documented reasons are provided."
-        },
-        {
-          label: "Documentation Availability",
-          description: "Available documentation includes the model card, business case, data dictionary, feature list, training log, validation report, fairness analysis, monitoring plan, user guide, change-management records, and decommissioning plan.",
-          outcomes: "Document inventory is complete and current. Auditor can access all required documents through the model registry or governance repository."
-        }
-      ]
-    },
-    {
-      id: "discontinuation",
-      title: "Model Discontinuation",
-      summary: "Retirement conditions, sunsetting plan, archival procedures, and stakeholder communications.",
-      guidance: "A strong discontinuation section proves the organization can retire a model without losing accountability for historical decisions.",
-      fields: [
-        {
-          label: "Conditions for Retirement",
-          description: "Retirement is triggered by sustained performance degradation, unresolved fairness concern, regulatory change, major data-source change, replacement by a validated model, discontinued product line, or unmitigated platform risk.",
-          outcomes: "Retirement criteria are listed in lifecycle plan. Monitoring reports map trigger thresholds to actions. Committee minutes document decisions to continue, remediate, replace, or retire."
-        },
-        {
-          label: "Model Sunsetting Plans",
-          description: "A sunsetting plan defines successor model development, parallel testing, user communication, fallback underwriting procedures, approval steps, and transition timing.",
-          outcomes: "Sunset checklist includes successor readiness, parallel-run results, rollback plan, user training, compliance approval, and production cutover evidence."
-        },
-        {
-          label: "Model Discontinuance and Archival",
-          description: "When retired, the model is removed from production, access is disabled, and final artifacts, code, training snapshot, validation report, monitoring history, decision logs, and reason-code mappings are archived.",
-          outcomes: "Registry marks model status as retired with date, reason, and approving body. Archived artifacts can reproduce historical decisions for a sample period."
-        },
-        {
-          label: "Communication to Stakeholders",
-          description: "Stakeholders include underwriters, credit-risk leadership, compliance, internal audit, technology, regulators when applicable, and affected business units.",
-          outcomes: "Communication plan and completion evidence are retained. Users acknowledge new procedures before cutover. Customer-impact review is completed if retirement relates to fairness or error."
-        }
+const stages = [
+  {
+    id: "design",
+    title: "Design and Objectives",
+    purpose: "Define what the model is supposed to do, where it may be used, where it must not be used, and why the use case is justified.",
+    auditWhy: "Auditors need a precise approved use before they can test scope, misuse, accountability, and whether model behavior aligns with the business purpose.",
+    evidence: ["Approved business case", "Model inventory entry", "Use-case approval memo", "Prohibited-use policy", "Production product-code logs"],
+    redFlags: ["Purpose is vague", "Prohibited uses are missing", "No owner approved the use case", "Model is described as generally useful without scope boundaries"],
+    attributes: [
+      {
+        name: "Purpose and Strategic Alignment",
+        definition: "The business reason the model exists and how it connects to approved strategy, risk appetite, and policy.",
+        example: "Supports consumer personal-loan underwriting by estimating default risk and routing applications to approve, decline, or manual review.",
+        auditQuestion: "Can the business purpose be traced to an approved use case and risk committee materials?"
+      },
+      {
+        name: "Intended Use and Misuse Guidance",
+        definition: "The allowed and prohibited uses of the model.",
+        example: "Approved for consumer personal loans; not approved for mortgage underwriting, collections, marketing, employment, or insurance decisions.",
+        auditQuestion: "Can production logs prove the model is used only for approved products and workflows?"
+      },
+      {
+        name: "Model Type and Architecture",
+        definition: "The model family, major design choices, inputs, outputs, thresholds, and decision role.",
+        example: "Gradient-boosted decision tree model producing calibrated default probability and reason codes.",
+        auditQuestion: "Does the deployed model artifact match the documented architecture, feature list, and version hash?"
+      },
+      {
+        name: "Ethical Design Considerations",
+        definition: "Design constraints intended to reduce foreseeable harm, unfairness, opacity, privacy risk, or misuse.",
+        example: "Protected attributes are excluded; proxy features require justification; edge cases route to human review.",
+        auditQuestion: "Were fairness, privacy, explainability, and human oversight requirements defined before deployment?"
+      }
+    ],
+    quiz: {
+      question: "Which evidence best supports the claim that a loan model is used only for approved personal-loan products?",
+      options: [
+        { text: "Production logs showing scored product codes", correct: true, feedback: "Correct. Scope claims should be tested against actual production use." },
+        { text: "A chart showing model AUC", correct: false, feedback: "AUC tests predictive performance, not whether the model is used only in approved contexts." },
+        { text: "A training hyperparameter log", correct: false, feedback: "Training settings do not prove production use is within approved scope." },
+        { text: "An API latency dashboard", correct: false, feedback: "Latency is operational evidence, but it does not prove intended-use compliance." }
       ]
     }
-  ]
+  },
+  {
+    id: "development",
+    title: "Development and Training",
+    purpose: "Document how the model was built, what data and labels were used, and what mitigations were applied during development.",
+    auditWhy: "Auditors need development evidence to trace the model from source data to final artifact and understand where error, bias, or leakage could enter.",
+    evidence: ["Training pipeline logs", "Data dictionary", "Data lineage diagram", "Data-quality report", "Label-generation script", "Proxy review"],
+    redFlags: ["Training data date range is missing", "Labels are not traceable", "Feature exclusions are undocumented", "No challenger model or baseline comparison"],
+    attributes: [
+      {
+        name: "Algorithm Specifics",
+        definition: "The algorithm, training setup, hyperparameters, software environment, and reproducibility controls.",
+        example: "Gradient-boosted tree model with regularization, maximum-depth limits, learning-rate tuning, and monotonic constraints.",
+        auditQuestion: "Can the training process be re-executed and reproduce metrics within tolerance?"
+      },
+      {
+        name: "Data Used to Train the Model",
+        definition: "The sources, date ranges, exclusions, preprocessing, transformations, and limitations of training data.",
+        example: "Five years of internal personal-loan applications, repayment performance, credit-bureau variables, and macroeconomic indicators.",
+        auditQuestion: "Can a sample of model records be traced back to source systems?"
+      },
+      {
+        name: "Labeling Sources and Quality",
+        definition: "How the target outcome was defined, generated, reconciled, and quality checked.",
+        example: "Default within 12 months generated from servicing and collections systems.",
+        auditQuestion: "Are timing windows, charge-off codes, and reconciliation results documented?"
+      },
+      {
+        name: "Fairness and Bias Mitigations",
+        definition: "Steps taken during development to reduce unfairness or proxy discrimination.",
+        example: "Protected-attribute exclusion, proxy review, subgroup tests, threshold sensitivity analysis, and manual review for thin-file cases.",
+        auditQuestion: "Do mitigation decisions connect to measured subgroup performance and legitimate business need?"
+      }
+    ],
+    quiz: {
+      question: "A model card says, 'The model was trained on recent historical loan data.' What is the biggest audit weakness?",
+      options: [
+        { text: "It does not identify source systems, date range, exclusions, preprocessing, or quality results.", correct: true, feedback: "Correct. Training-data claims need traceable detail, not broad descriptions." },
+        { text: "It uses the word historical.", correct: false, feedback: "Historical data can be appropriate. The issue is the lack of lineage and quality detail." },
+        { text: "It does not mention API latency.", correct: false, feedback: "API latency belongs to deployment operations, not training-data documentation." },
+        { text: "It does not name the audit committee.", correct: false, feedback: "Governance owners matter, but this specific weakness is missing data lineage detail." }
+      ]
+    }
+  },
+  {
+    id: "evaluation",
+    title: "Evaluation and Testing",
+    purpose: "Show whether model claims are supported by validation, fairness, robustness, explanation, and limitation evidence.",
+    auditWhy: "Evaluation is where model-card claims become testable. Auditors look for acceptance criteria, subgroup results, limitations, and evidence that the right tests were performed.",
+    evidence: ["Validation report", "Holdout and out-of-time results", "Subgroup performance table", "Fairness analysis", "Robustness tests", "Reason-code fidelity sample"],
+    redFlags: ["Only overall accuracy is reported", "No subgroup testing", "No acceptance threshold", "Limitations are absent or generic"],
+    attributes: [
+      {
+        name: "Known Limitations and Biases",
+        definition: "The conditions, populations, data gaps, or scenarios where model performance is weaker or less certain.",
+        example: "Less reliable for thin-file applicants, unusual income patterns, recent identity changes, or regions outside the bank's footprint.",
+        auditQuestion: "Are limitations reflected in user guidance, manual review rules, and monitoring?"
+      },
+      {
+        name: "Technical Performance",
+        definition: "Predictive quality, calibration, error rates, robustness, and threshold behavior.",
+        example: "AUC = 0.84, KS = 0.43, calibration slope = 0.98, out-of-time AUC within 0.03 of holdout.",
+        auditQuestion: "Are metrics tied to acceptance criteria and business decision thresholds?"
+      },
+      {
+        name: "Ethical Performance",
+        definition: "Fairness, explanation quality, truthfulness of reason codes, and harm-related performance measures.",
+        example: "Disparate-impact ratios at or above 0.90 and reason codes match local explanations in 95% of sampled declines.",
+        auditQuestion: "Do fairness and explanation results cover affected groups and high-impact decisions?"
+      },
+      {
+        name: "Data Used to Test the Model",
+        definition: "The holdout, out-of-time, shadow, or production samples used for validation.",
+        example: "A separated holdout sample, recent out-of-time sample, and production shadow-test sample.",
+        auditQuestion: "Is there proof that test data is separate from training data and representative of deployment?"
+      }
+    ],
+    quiz: {
+      question: "Which test best evaluates whether adverse-action reason codes are truthful?",
+      options: [
+        { text: "Compare reason codes to local explanation drivers for declined applications", correct: true, feedback: "Correct. Reason-code fidelity should be tested against the actual drivers of the recommendation." },
+        { text: "Calculate average API response time", correct: false, feedback: "API latency does not test whether explanations are accurate." },
+        { text: "Review the business case", correct: false, feedback: "The business case may justify the model, but it does not validate explanation fidelity." },
+        { text: "Count the total number of approved applications", correct: false, feedback: "Volume does not show whether adverse-action reasons are truthful." }
+      ]
+    }
+  },
+  {
+    id: "deployment",
+    title: "Deployment",
+    purpose: "Describe how the model is used in production, what systems call it, what inputs it receives, and how users interact with the output.",
+    auditWhy: "A model can be well developed but poorly deployed. Auditors test whether real-world use, access, fallback, and user instructions match the approved design.",
+    evidence: ["Change ticket", "User acceptance testing", "API logs", "Input schema", "Access-control review", "Underwriter guidance"],
+    redFlags: ["No deployment approval", "No endpoint versioning", "Fallback process is unclear", "Users are not trained on model limitations"],
+    attributes: [
+      {
+        name: "Real-World Input Characteristics",
+        definition: "The production inputs, validation rules, missing-value handling, and input quality controls.",
+        example: "Application data, income, employment status, debt obligations, credit-bureau attributes, loan amount, purpose, and derived ratios.",
+        auditQuestion: "Do production inputs match the documented schema and expected ranges?"
+      },
+      {
+        name: "Operational Context",
+        definition: "Where the model sits in the workflow and how its recommendation affects decisions.",
+        example: "Embedded in the loan-origination platform as an underwriting decision-support tool.",
+        auditQuestion: "Can decisions be traced from application intake to score, recommendation, review, and final decision?"
+      },
+      {
+        name: "Interface and API Constraints",
+        definition: "Technical controls around system calls, endpoint versions, validation, logging, latency, and fallback.",
+        example: "Secure API with authenticated calls, versioned endpoints, schema validation, response logging, and manual-review fallback.",
+        auditQuestion: "Can only approved systems and service accounts call the model endpoint?"
+      },
+      {
+        name: "User Instructions",
+        definition: "Instructions for interpreting scores, handling exceptions, documenting overrides, and communicating decisions.",
+        example: "Underwriters are trained on score interpretation, manual review triggers, override documentation, and reason-code communication.",
+        auditQuestion: "Do active users have current training and complete override justifications?"
+      }
+    ],
+    quiz: {
+      question: "Which evidence best supports an end-to-end deployment trace?",
+      options: [
+        { text: "A sample linking application intake, model score, recommendation, human review status, and final decision", correct: true, feedback: "Correct. Deployment auditability depends on tracing the real production decision path." },
+        { text: "A list of training features only", correct: false, feedback: "Feature lists help, but deployment traceability needs production workflow evidence." },
+        { text: "A high-level AI strategy slide", correct: false, feedback: "Strategy does not prove production traceability." },
+        { text: "A fairness literature review", correct: false, feedback: "Fairness literature is useful background, not deployment evidence." }
+      ]
+    }
+  },
+  {
+    id: "monitoring",
+    title: "Monitoring and Maintenance",
+    purpose: "Define how the organization detects drift, misuse, performance degradation, incidents, and needed model changes after deployment.",
+    auditWhy: "AI systems change in production because data, users, policies, and environments change. Auditors need monitoring evidence and escalation paths.",
+    evidence: ["Monitoring dashboard", "PSI reports", "Alert thresholds", "Incident tickets", "Override monitoring", "Committee minutes"],
+    redFlags: ["Monitoring exists but no one reviews it", "Alert thresholds are undefined", "No ticket trail for exceptions", "Out-of-scope use is not monitored"],
+    attributes: [
+      {
+        name: "Ensuring Intended Use",
+        definition: "Controls that confirm the model remains inside approved products, users, thresholds, and workflows.",
+        example: "Monthly use report compares production calls against approved product codes and user groups.",
+        auditQuestion: "Do out-of-scope calls trigger documented investigation?"
+      },
+      {
+        name: "Drift Detection",
+        definition: "Monitoring that compares current inputs, scores, outcomes, and calibration to validation baselines.",
+        example: "Weekly PSI reports for critical features and model score; PSI >= 0.20 triggers formal investigation.",
+        auditQuestion: "Are drift thresholds defined before alerts occur?"
+      },
+      {
+        name: "Operational Responsibility",
+        definition: "Named ownership for performance, validation, compliance, IT operations, incidents, and business decisions.",
+        example: "Credit Risk Analytics owns performance; Model Risk Management owns validation; Compliance owns fair-lending oversight.",
+        auditQuestion: "Do meeting minutes show issues, owners, due dates, and closure evidence?"
+      },
+      {
+        name: "Preventing Misuse and Supporting Transparency",
+        definition: "Access, product-scope, override, threshold-change, and explanation controls that keep the model auditable.",
+        example: "Role-based access, threshold-change approvals, override monitoring, reason-code retention, and reproducible decision records.",
+        auditQuestion: "Can declined applications reproduce score, reason codes, model version, and decision path?"
+      }
+    ],
+    quiz: {
+      question: "A monitoring dashboard exists, but no one reviews alerts or opens tickets. How should an auditor treat the monitoring claim?",
+      options: [
+        { text: "Weak, because monitoring without review and escalation is not an effective control", correct: true, feedback: "Correct. A dashboard alone is not enough; monitoring needs ownership, thresholds, review, and remediation." },
+        { text: "Strong, because any dashboard proves monitoring", correct: false, feedback: "A dashboard is only evidence of data display, not control effectiveness." },
+        { text: "Not relevant to model cards", correct: false, feedback: "Monitoring is a core model-card lifecycle stage." },
+        { text: "Supported if the model had good AUC at launch", correct: false, feedback: "Launch performance does not replace ongoing monitoring." }
+      ]
+    }
+  },
+  {
+    id: "governance",
+    title: "Governance and Accountability",
+    purpose: "Name accountable owners, document approvals, identify legal constraints, and show where supporting documentation lives.",
+    auditWhy: "Governance turns model documentation into accountability. Auditors need named owners, current approvals, and accessible evidence.",
+    evidence: ["Model registry", "RACI matrix", "Validation sign-off", "Compliance review", "Approval memo", "Documentation inventory"],
+    redFlags: ["Owners are roles but not named people", "Version history is incomplete", "Legal constraints are generic", "Auditors cannot access required documentation"],
+    attributes: [
+      {
+        name: "Version and Update History",
+        definition: "The record of versions, training windows, validation dates, deployment dates, thresholds, and changes.",
+        example: "Registry shows v1.0 trained January 2025, validated February 2025, and deployed March 2025.",
+        auditQuestion: "Do updates include change tickets, validation reports, approvals, and deployment checksums?"
+      },
+      {
+        name: "Responsible Teams or Contacts",
+        definition: "Named business, technical, validation, compliance, IT, and executive owners.",
+        example: "Business owner, model owner, validator, compliance owner, IT owner, and executive sponsor are listed in the model inventory.",
+        auditQuestion: "Are owners current, active, and aware of their responsibilities?"
+      },
+      {
+        name: "Legal and Regulatory Constraints",
+        definition: "The laws, regulations, policies, and contractual constraints that shape model use and evidence needs.",
+        example: "ECOA/Regulation B, FCRA, state lending laws, privacy policy, model-risk policy, and records-retention requirements.",
+        auditQuestion: "Are legal constraints mapped to specific controls and tests?"
+      },
+      {
+        name: "Documentation Availability",
+        definition: "The complete set of model documents, evidence, approvals, and monitoring records needed for review.",
+        example: "Model card, business case, data dictionary, feature list, training log, validation report, fairness analysis, monitoring plan, user guide, change records, and decommissioning plan.",
+        auditQuestion: "Can an auditor retrieve current evidence from the registry or governance repository?"
+      }
+    ],
+    quiz: {
+      question: "Which is the strongest governance evidence?",
+      options: [
+        { text: "A model registry with named owners, version history, approvals, validation dates, and links to documents", correct: true, feedback: "Correct. Governance evidence should connect ownership, approvals, versioning, and documentation." },
+        { text: "A statement that the data science team owns the model", correct: false, feedback: "A team-level statement is weak without named accountability and current evidence." },
+        { text: "A high AUC score", correct: false, feedback: "Performance is not governance evidence." },
+        { text: "A vendor marketing brochure", correct: false, feedback: "Marketing material is not a governance control record." }
+      ]
+    }
+  },
+  {
+    id: "discontinuation",
+    title: "Model Discontinuation",
+    purpose: "Plan how the model will be retired, archived, replaced, and communicated when it is no longer appropriate for use.",
+    auditWhy: "AI accountability does not end at shutdown. Auditors need evidence that historical decisions can be reproduced and that risky models can be retired safely.",
+    evidence: ["Retirement criteria", "Sunset checklist", "Successor model plan", "Rollback plan", "Archive policy", "Stakeholder communication plan"],
+    redFlags: ["No retirement triggers", "No archive plan", "Endpoint shutdown is not tested", "Historical decisions cannot be reproduced"],
+    attributes: [
+      {
+        name: "Conditions for Retirement",
+        definition: "The events that trigger remediation, replacement, or retirement.",
+        example: "Sustained degradation, unresolved fairness concern, regulatory change, data-source change, replacement model, discontinued product, or unmitigated platform risk.",
+        auditQuestion: "Are retirement triggers tied to monitoring thresholds and governance decisions?"
+      },
+      {
+        name: "Model Sunsetting Plans",
+        definition: "The controlled transition plan to retire or replace the model without unmanaged business disruption.",
+        example: "Successor readiness, parallel testing, rollback plan, user training, compliance approval, and cutover evidence.",
+        auditQuestion: "Can the organization keep operating safely if the model is withdrawn?"
+      },
+      {
+        name: "Discontinuance and Archival",
+        definition: "How the model is disabled and how artifacts, logs, data snapshots, and decision records are preserved.",
+        example: "Final artifact, code, training snapshot, validation report, monitoring history, decision logs, and reason-code mappings are archived.",
+        auditQuestion: "Can historical decisions be reproduced after model retirement?"
+      },
+      {
+        name: "Stakeholder Communication",
+        definition: "How affected internal and external stakeholders are notified about retirement or replacement.",
+        example: "Underwriters, risk leadership, compliance, internal audit, technology, regulators where applicable, and affected business units receive communication.",
+        auditQuestion: "Is there evidence that users acknowledged new procedures before cutover?"
+      }
+    ],
+    quiz: {
+      question: "Why does a model card need discontinuation planning?",
+      options: [
+        { text: "Because auditors may need to reproduce historical decisions after the model is retired", correct: true, feedback: "Correct. Retirement does not erase accountability for past automated decisions." },
+        { text: "Because retired models always perform better", correct: false, feedback: "Retirement is about risk control, transition, and accountability, not better performance." },
+        { text: "Because discontinuation replaces validation", correct: false, feedback: "Validation and discontinuation address different lifecycle needs." },
+        { text: "Because users should never replace models", correct: false, feedback: "Models can be replaced, but the transition must be controlled and auditable." }
+      ]
+    }
+  }
+];
+
+const state = {
+  activeStage: stages[0].id,
+  completedStages: new Set(),
+  quizAnswers: {}
 };
 
-const reviewDimensions = [
-  { id: "completeness", label: "Completeness" },
-  { id: "evidence", label: "Evidence quality" },
-  { id: "auditability", label: "Auditability" },
-  { id: "risk", label: "Risk concerns" }
-];
-
-const ratingOptions = [
-  { value: "0", label: "Unreviewed", score: 0 },
-  { value: "4", label: "Strong", score: 4 },
-  { value: "3", label: "Adequate", score: 3 },
-  { value: "2", label: "Weak", score: 2 },
-  { value: "1", label: "Missing", score: 1 }
-];
-
-function clone(value) {
-  return JSON.parse(JSON.stringify(value));
-}
-
-let modelCard = clone(initialModelCard);
-let activeStage = modelCard.stages[0].id;
-let reviewState = Object.fromEntries(modelCard.stages.map((stage) => [
-  stage.id,
-  Object.fromEntries(reviewDimensions.map((dimension) => [dimension.id, "0"]))
-]));
-
 const els = {
-  purpose: document.querySelector("#studio-purpose"),
-  scoreValue: document.querySelector("#score-value"),
-  scoreBar: document.querySelector("#score-bar"),
   stageButtons: document.querySelector("#stage-buttons"),
   stageKicker: document.querySelector("#stage-kicker"),
   stageTitle: document.querySelector("#stage-title"),
-  stageSummary: document.querySelector("#stage-summary"),
-  stageFields: document.querySelector("#stage-fields"),
-  reviewControls: document.querySelector("#review-controls"),
-  gapList: document.querySelector("#gap-list"),
-  resetStage: document.querySelector("#reset-stage"),
-  clearReview: document.querySelector("#clear-review"),
-  exportMarkdown: document.querySelector("#export-markdown"),
-  exportJson: document.querySelector("#export-json")
+  stagePurpose: document.querySelector("#stage-purpose"),
+  auditWhy: document.querySelector("#stage-audit-why"),
+  evidence: document.querySelector("#stage-evidence"),
+  redFlags: document.querySelector("#stage-red-flags"),
+  attributeList: document.querySelector("#attribute-list"),
+  question: document.querySelector("#quick-check-question"),
+  options: document.querySelector("#quick-check-options"),
+  feedback: document.querySelector("#quick-check-feedback"),
+  markComplete: document.querySelector("#mark-complete"),
+  progressCount: document.querySelector("#progress-count"),
+  progressBar: document.querySelector("#progress-bar"),
+  stagesComplete: document.querySelector("#stages-complete"),
+  checksCorrect: document.querySelector("#checks-correct"),
+  focusArea: document.querySelector("#focus-area"),
+  nextGuidance: document.querySelector("#next-guidance")
 };
 
-function getActiveStage() {
-  return modelCard.stages.find((stage) => stage.id === activeStage);
+function activeStage() {
+  return stages.find((stage) => stage.id === state.activeStage);
 }
 
 function render() {
-  els.purpose.textContent = modelCard.purpose;
-  renderStageButtons();
+  renderStageNav();
   renderStage();
-  renderReviewControls();
-  updateScore();
+  renderQuiz();
+  renderSummary();
 }
 
-function renderStageButtons() {
-  els.stageButtons.innerHTML = modelCard.stages.map((stage, index) => {
-    const reviewed = Object.values(reviewState[stage.id]).filter((value) => value !== "0").length;
-    const current = stage.id === activeStage ? ` aria-current="page"` : "";
+function renderStageNav() {
+  els.stageButtons.innerHTML = stages.map((stage, index) => {
+    const complete = state.completedStages.has(stage.id);
+    const answered = state.quizAnswers[stage.id];
+    const current = stage.id === state.activeStage ? ` aria-current="page"` : "";
     return `
       <button class="stage-button" type="button" data-stage="${stage.id}"${current}>
         <span>${index + 1}. ${escapeHtml(stage.title)}</span>
-        <small>${reviewed}/${reviewDimensions.length} reviewed</small>
+        <small>${complete ? "Complete" : answered ? "Check answered" : "Not started"}</small>
       </button>
     `;
   }).join("");
 
   els.stageButtons.querySelectorAll("button").forEach((button) => {
     button.addEventListener("click", () => {
-      activeStage = button.dataset.stage;
+      state.activeStage = button.dataset.stage;
       render();
     });
   });
 }
 
 function renderStage() {
-  const stage = getActiveStage();
-  const stageIndex = modelCard.stages.findIndex((item) => item.id === stage.id) + 1;
-  els.stageKicker.textContent = `Stage ${stageIndex}`;
+  const stage = activeStage();
+  const index = stages.findIndex((item) => item.id === stage.id) + 1;
+  els.stageKicker.textContent = `Stage ${index} of ${stages.length}`;
   els.stageTitle.textContent = stage.title;
-  els.stageSummary.textContent = stage.summary;
-
-  els.stageFields.innerHTML = `
-    <div class="guidance-panel">
-      <strong>Audit lens</strong>
-      <p>${escapeHtml(stage.guidance)}</p>
-    </div>
-    ${stage.fields.map((field, index) => renderField(field, index)).join("")}
-  `;
-
-  els.stageFields.querySelectorAll("textarea").forEach((textarea) => {
-    textarea.addEventListener("input", () => {
-      const field = stage.fields[Number(textarea.dataset.field)];
-      field[textarea.dataset.key] = textarea.value;
-    });
-  });
+  els.stagePurpose.textContent = stage.purpose;
+  els.auditWhy.textContent = stage.auditWhy;
+  els.evidence.innerHTML = listItems(stage.evidence);
+  els.redFlags.innerHTML = listItems(stage.redFlags);
+  els.attributeList.innerHTML = stage.attributes.map(renderAttribute).join("");
+  els.markComplete.textContent = state.completedStages.has(stage.id) ? "Stage complete" : "Mark stage complete";
 }
 
-function renderField(field, index) {
+function renderAttribute(attribute) {
   return `
-    <article class="model-card-field">
-      <h3>${escapeHtml(field.label)}</h3>
-      <label>
-        <span>Description / example</span>
-        <textarea data-field="${index}" data-key="description">${escapeHtml(field.description)}</textarea>
-      </label>
-      <label>
-        <span>Testable outcomes / audit evidence</span>
-        <textarea data-field="${index}" data-key="outcomes">${escapeHtml(field.outcomes)}</textarea>
-      </label>
+    <article class="attribute-card">
+      <h4>${escapeHtml(attribute.name)}</h4>
+      <p><strong>Definition:</strong> ${escapeHtml(attribute.definition)}</p>
+      <p><strong>Loan model example:</strong> ${escapeHtml(attribute.example)}</p>
+      <p><strong>Audit question:</strong> ${escapeHtml(attribute.auditQuestion)}</p>
     </article>
   `;
 }
 
-function renderReviewControls() {
-  const stage = getActiveStage();
-  els.reviewControls.innerHTML = reviewDimensions.map((dimension) => `
-    <label>
-      <span>${escapeHtml(dimension.label)}</span>
-      <select data-dimension="${dimension.id}">
-        ${ratingOptions.map((option) => `
-          <option value="${option.value}" ${reviewState[stage.id][dimension.id] === option.value ? "selected" : ""}>${option.label}</option>
-        `).join("")}
-      </select>
-    </label>
-  `).join("");
+function renderQuiz() {
+  const stage = activeStage();
+  const answer = state.quizAnswers[stage.id];
+  els.question.textContent = stage.quiz.question;
+  els.options.innerHTML = stage.quiz.options.map((option, index) => {
+    const selected = answer?.index === index;
+    const resultClass = selected ? (option.correct ? " is-correct" : " is-incorrect") : "";
+    return `
+      <button class="quick-check-option${resultClass}" type="button" data-option="${index}">
+        ${escapeHtml(option.text)}
+      </button>
+    `;
+  }).join("");
 
-  els.reviewControls.querySelectorAll("select").forEach((select) => {
-    select.addEventListener("change", () => {
-      reviewState[stage.id][select.dataset.dimension] = select.value;
-      renderStageButtons();
-      updateScore();
-    });
-  });
-}
-
-function updateScore() {
-  const scores = modelCard.stages.flatMap((stage) => (
-    reviewDimensions.map((dimension) => Number(reviewState[stage.id][dimension.id]))
-  ));
-  const maxScore = scores.length * 4;
-  const currentScore = scores.reduce((sum, value) => sum + value, 0);
-  const percent = Math.round((currentScore / maxScore) * 100);
-  els.scoreValue.textContent = `${percent}%`;
-  els.scoreBar.style.width = `${percent}%`;
-  renderGaps();
-}
-
-function renderGaps() {
-  const gaps = [];
-  modelCard.stages.forEach((stage) => {
-    reviewDimensions.forEach((dimension) => {
-      const rating = Number(reviewState[stage.id][dimension.id]);
-      if (rating === 0) {
-        gaps.push(`${stage.title}: ${dimension.label} has not been reviewed.`);
-      } else if (rating <= 2) {
-        gaps.push(`${stage.title}: ${dimension.label} is rated ${getRatingLabel(rating).toLowerCase()}.`);
-      }
+  els.options.querySelectorAll("button").forEach((button) => {
+    button.addEventListener("click", () => {
+      const optionIndex = Number(button.dataset.option);
+      state.quizAnswers[stage.id] = {
+        index: optionIndex,
+        correct: stage.quiz.options[optionIndex].correct
+      };
+      renderQuiz();
+      renderSummary();
+      renderStageNav();
     });
   });
 
-  if (!gaps.length) {
-    els.gapList.innerHTML = `<li>No review gaps flagged yet.</li>`;
+  if (!answer) {
+    els.feedback.hidden = true;
+    els.feedback.textContent = "";
     return;
   }
 
-  els.gapList.innerHTML = gaps.slice(0, 12).map((gap) => `<li>${escapeHtml(gap)}</li>`).join("");
+  const selectedOption = stage.quiz.options[answer.index];
+  els.feedback.hidden = false;
+  els.feedback.className = `quick-check-feedback ${selectedOption.correct ? "is-correct" : "is-incorrect"}`;
+  els.feedback.textContent = selectedOption.feedback;
 }
 
-function getRatingLabel(value) {
-  return ratingOptions.find((option) => Number(option.value) === value)?.label || "Unreviewed";
+function renderSummary() {
+  const complete = state.completedStages.size;
+  const correct = Object.values(state.quizAnswers).filter((answer) => answer.correct).length;
+  const percent = Math.round((complete / stages.length) * 100);
+  els.progressCount.textContent = `${complete} of ${stages.length} stages`;
+  els.progressBar.style.width = `${percent}%`;
+  els.stagesComplete.textContent = String(complete);
+  els.checksCorrect.textContent = String(correct);
+  els.focusArea.textContent = activeStage().title.split(" ")[0];
+  els.nextGuidance.textContent = getNextGuidance(complete, correct);
 }
 
-function resetActiveStage() {
-  const originalStage = initialModelCard.stages.find((stage) => stage.id === activeStage);
-  const stageIndex = modelCard.stages.findIndex((stage) => stage.id === activeStage);
-  modelCard.stages[stageIndex] = clone(originalStage);
-  renderStage();
+function getNextGuidance(complete, correct) {
+  if (complete === stages.length && correct === stages.length) {
+    return "You have completed the learning path. Next, practice applying these principles in the AI Audit Lab.";
+  }
+  if (complete === stages.length) {
+    return "All stages are marked complete. Revisit any missed quick checks to strengthen your audit judgment.";
+  }
+  return "Work through each stage, inspect the attributes, answer the quick check, and mark the stage complete when the concepts are clear.";
 }
 
-function clearReview() {
-  reviewState = Object.fromEntries(modelCard.stages.map((stage) => [
-    stage.id,
-    Object.fromEntries(reviewDimensions.map((dimension) => [dimension.id, "0"]))
-  ]));
+function markComplete() {
+  state.completedStages.add(state.activeStage);
   render();
 }
 
-function exportJson() {
-  const payload = {
-    modelCard,
-    review: reviewState,
-    exportedAt: new Date().toISOString()
-  };
-  download("model-card-review.json", JSON.stringify(payload, null, 2), "application/json");
-}
-
-function exportMarkdown() {
-  const lines = [
-    `# ${modelCard.title}`,
-    "",
-    modelCard.subtitle,
-    "",
-    "## Purpose",
-    modelCard.purpose,
-    "",
-    "## Review Summary",
-    `Auditability score: ${els.scoreValue.textContent}`,
-    "",
-    ...modelCard.stages.flatMap((stage, index) => stageToMarkdown(stage, index))
-  ];
-  download("model-card-review.md", lines.join("\n"), "text/markdown");
-}
-
-function stageToMarkdown(stage, index) {
-  return [
-    `## ${index + 1}. ${stage.title}`,
-    "",
-    stage.summary,
-    "",
-    `Audit lens: ${stage.guidance}`,
-    "",
-    "### Review ratings",
-    ...reviewDimensions.map((dimension) => `- ${dimension.label}: ${getRatingLabel(Number(reviewState[stage.id][dimension.id]))}`),
-    "",
-    ...stage.fields.flatMap((field) => [
-      `### ${field.label}`,
-      "",
-      "Description / example:",
-      field.description,
-      "",
-      "Testable outcomes / audit evidence:",
-      field.outcomes,
-      ""
-    ])
-  ];
-}
-
-function download(filename, content, type) {
-  const blob = new Blob([content], { type });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = filename;
-  document.body.append(link);
-  link.click();
-  link.remove();
-  URL.revokeObjectURL(url);
+function listItems(items) {
+  return items.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
 }
 
 function escapeHtml(value = "") {
@@ -461,9 +464,5 @@ function escapeHtml(value = "") {
     .replaceAll("'", "&#039;");
 }
 
-els.resetStage.addEventListener("click", resetActiveStage);
-els.clearReview.addEventListener("click", clearReview);
-els.exportMarkdown.addEventListener("click", exportMarkdown);
-els.exportJson.addEventListener("click", exportJson);
-
+els.markComplete.addEventListener("click", markComplete);
 render();

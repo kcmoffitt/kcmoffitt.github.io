@@ -23,56 +23,85 @@
       <div class="section-heading">
         <p class="eyebrow">Miniapp</p>
         <h1>Model Card Studio</h1>
-        <p class="lede">Inspect, edit, and review an audit-ready model card using a seven-stage AI lifecycle structure.</p>
+        <p class="lede">Learn the seven-stage model card structure auditors use to connect AI documentation, evidence, tests, and findings.</p>
       </div>
 
-      <section class="miniapp-panel studio-overview" aria-labelledby="studio-title">
+      <section class="miniapp-panel studio-intro" aria-labelledby="studio-title">
         <div>
-          <h2 id="studio-title">AI Loan Approval Model Card</h2>
-          <p id="studio-purpose"></p>
+          <h2 id="studio-title">Learn the Model Card Before You Audit It</h2>
+          <p>A model card is not just a model summary. For audit work, it is a map of claims that should be supported by evidence and testable outcomes.</p>
         </div>
-        <div class="studio-score">
-          <span id="score-label">Auditability score</span>
-          <strong id="score-value">0%</strong>
-          <div class="progress-bar" aria-label="Auditability score"><span id="score-bar"></span></div>
+        <div class="studio-progress">
+          <span>Learning progress</span>
+          <strong id="progress-count">0 of 7 stages</strong>
+          <div class="progress-bar" aria-label="Learning progress"><span id="progress-bar"></span></div>
         </div>
       </section>
 
-      <section class="studio-layout" aria-label="Model card workspace">
+      <section class="model-card-learning" aria-label="Seven-stage model card learning workspace">
         <aside class="stage-nav" aria-label="Model card stages">
           <div id="stage-buttons"></div>
         </aside>
 
         <div class="studio-workspace">
           <section class="miniapp-panel stage-panel" aria-labelledby="stage-title">
-            <div class="stage-heading">
+            <div class="learning-stage-head">
               <div>
                 <p id="stage-kicker" class="eyebrow"></p>
                 <h2 id="stage-title"></h2>
-                <p id="stage-summary"></p>
+                <p id="stage-purpose"></p>
               </div>
-              <div class="stage-actions">
-                <button type="button" id="reset-stage">Reset stage</button>
-                <button type="button" id="export-markdown">Export Markdown</button>
-                <button type="button" id="export-json">Export JSON</button>
-              </div>
+              <button type="button" id="mark-complete">Mark stage complete</button>
             </div>
-            <div id="stage-fields" class="stage-fields"></div>
+
+            <div class="learning-grid">
+              <article class="learning-note">
+                <h3>Why Auditors Care</h3>
+                <p id="stage-audit-why"></p>
+              </article>
+              <article class="learning-note">
+                <h3>Strong Evidence Looks Like</h3>
+                <ul id="stage-evidence"></ul>
+              </article>
+              <article class="learning-note">
+                <h3>Common Red Flags</h3>
+                <ul id="stage-red-flags"></ul>
+              </article>
+            </div>
+
+            <div>
+              <h3>Attributes in This Stage</h3>
+              <div id="attribute-list" class="attribute-list"></div>
+            </div>
           </section>
 
-          <section class="miniapp-panel review-panel" aria-labelledby="review-heading">
-            <div class="stage-heading">
+          <section class="miniapp-panel quick-check-panel" aria-labelledby="quick-check-title">
+            <div>
+              <p class="eyebrow">Practice</p>
+              <h2 id="quick-check-title">Quick Check</h2>
+              <p id="quick-check-question"></p>
+            </div>
+            <div id="quick-check-options" class="quick-check-options"></div>
+            <div id="quick-check-feedback" class="quick-check-feedback" hidden></div>
+          </section>
+
+          <section class="miniapp-panel learning-summary" aria-labelledby="summary-title">
+            <h2 id="summary-title">What You Are Learning</h2>
+            <div class="summary-grid">
               <div>
-                <p class="eyebrow">Reviewer mode</p>
-                <h2 id="review-heading">Evidence Quality Review</h2>
+                <strong id="stages-complete">0</strong>
+                <span>Stages completed</span>
               </div>
-              <button type="button" id="clear-review">Clear review</button>
+              <div>
+                <strong id="checks-correct">0</strong>
+                <span>Quick checks correct</span>
+              </div>
+              <div>
+                <strong id="focus-area">Design</strong>
+                <span>Current focus</span>
+              </div>
             </div>
-            <div id="review-controls" class="review-controls"></div>
-            <div class="gap-summary">
-              <h3>Gap Summary</h3>
-              <ul id="gap-list"></ul>
-            </div>
+            <p id="next-guidance"></p>
           </section>
         </div>
       </section>
@@ -81,7 +110,7 @@
 
   <footer class="site-footer">
     <p>Auditing Artificial Intelligence</p>
-    <p>Document the claim, then inspect the evidence.</p>
+    <p>Learn the artifact, then practice the audit.</p>
   </footer>
 
   <script src="../../../js/app.js"></script>
