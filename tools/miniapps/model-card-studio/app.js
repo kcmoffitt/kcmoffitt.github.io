@@ -347,7 +347,8 @@ function renderStageNav() {
     const current = stage.id === state.activeStage ? ` aria-current="page"` : "";
     return `
       <button class="stage-button" type="button" data-stage="${stage.id}"${current}>
-        <span>${index + 1}. ${escapeHtml(stage.title)}</span>
+        <span class="stage-index" aria-hidden="true">${index + 1}.</span>
+        <span class="stage-label">${escapeHtml(stage.title)}</span>
         <small>${complete ? "Complete" : answered ? "Check answered" : "Not started"}</small>
       </button>
     `;
